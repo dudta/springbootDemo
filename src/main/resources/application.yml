@@ -8,10 +8,15 @@ spring:
       log-request-details: true
     datasource:
         platform: mysql
-        url: jdbc:mysql://192.168.102.119:3306/vmware?useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=utf8
+        url: jdbc:mysql://localhost:3306/vmware?useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=utf8
         username: root
         password: root
         driver-class-name: com.mysql.cj.jdbc.Driver
+        druid:
+            initial-size: 5
+            max-active: 30
+            min-idle: 5
+            max-wait: 60000
     mail:
       default-encoding: UTF-8
       host: smtp.qq.com
@@ -52,7 +57,7 @@ logging:
   level:
     root: INFO
     #com.bys.ots.dao : debug
- 
+
  
 SapSoEmailFilePath: d:\\SoEmailSap.txt
 SoInfoSapFilePath: d:\\SoInfoSap.txt
