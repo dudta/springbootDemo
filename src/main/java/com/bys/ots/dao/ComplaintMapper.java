@@ -4,14 +4,10 @@
  */
 package com.bys.ots.dao;
 
-import java.util.List;
-
+import com.bys.ots.model.Complaint;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import com.bys.ots.model.Complaint;
-import com.bys.ots.model.OrderTable;
-import com.bys.ots.model.User;
+import java.util.List;
 
 /**
  * @author bairuihua 2019/11/25
