@@ -1,0 +1,61 @@
+server:
+  port: 8080
+ 
+spring:
+    profiles:
+      active: constant
+    http: 
+      log-request-details: true
+    datasource:
+        platform: mysql
+        url: jdbc:mysql://192.168.102.119:3306/vmware?useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=utf8
+        username: root
+        password: root
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    mail:
+      default-encoding: UTF-8
+      host: smtp.qq.com
+      username: 3249083814@qq.com
+      password: srpgzuudjobrcjgg
+      properties: 
+        mail:
+          smpt:
+            auth: true
+            starttls:
+              enable: true
+              required: true
+    thymeleaf: 
+      mode: HTML5
+      encoding: UTF-8
+      cache: false
+      servlet:
+        content-type: text/html
+    redis:
+      host: 10.100.15.225
+      port: 6379
+      password: 123456
+      database: 0
+      timeout: 0
+      block-when-exhausted: true
+      jedis:
+        pool.max-idle: 8
+        pool.min-idle: 1
+        pool.max-active: 8
+        pool.max-wait: -1
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.bys.ots.model
+  configuration:
+    map-underscore-to-camel-case: true
+    
+logging:
+  level:
+    root: INFO
+    #com.bys.ots.dao : debug
+ 
+ 
+SapSoEmailFilePath: d:\\SoEmailSap.txt
+SoInfoSapFilePath: d:\\SoInfoSap.txt
+DnInfoSapFilePath: d:\\DnInfoSap.txt
+ 
+ 

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bys.ots.dao.SoEmailSapMapper" >
+  <resultMap id="BaseResultMap" type="com.bys.ots.model.SoEmailSap" >
+    <id column="SO" property="so" jdbcType="VARCHAR" />
+    <id column="SO_Item" property="soItem" jdbcType="VARCHAR" />
+    <result column="Partner" property="partner" jdbcType="VARCHAR" />
+    <result column="Customer" property="customer" jdbcType="VARCHAR" />
+    <result column="Email" property="email" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SO, SO_Item, Partner, Customer, Email,'sap' type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bys.ots.model.SoEmailSapExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from so_email_sap
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.bys.ots.model.SoEmailSapKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from so_email_sap
+    where SO = #{so,jdbcType=VARCHAR}
+      and SO_Item = #{soItem,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.bys.ots.model.SoEmailSapKey" >
+    delete from so_email_sap
+    where SO = #{so,jdbcType=VARCHAR}
+      and SO_Item = #{soItem,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bys.ots.model.SoEmailSapExample" >
+    delete from so_email_sap
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bys.ots.model.SoEmailSap" >
+    insert into so_email_sap (SO, SO_Item, Partner, 
+      Customer, Email)
+    values (#{so,jdbcType=VARCHAR}, #{soItem,jdbcType=VARCHAR}, #{partner,jdbcType=VARCHAR}, 
+      #{customer,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR})
+  </insert>
+  <insert id="InsertList"  parameterType="java.util.List" >
+    insert into so_email_sap (SO, SO_Item, Partner, 
+      Customer, Email)
+      VALUES
+    <foreach collection ="mlist" item="s" separator =",">
+         (#{s.so}, #{s.soItem}, #{s.partner},#{s.customer},#{s.email})
+    </foreach >
+</insert>
+  
+  
+  
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.bys.ots.model.SoEmailSap" >
+    insert into so_email_sap
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="so != null" >
+        SO,
+      </if>
+      <if test="soItem != null" >
+        SO_Item,
+      </if>
+      <if test="partner != null" >
+        Partner,
+      </if>
+      <if test="customer != null" >
+        Customer,
+      </if>
+      <if test="email != null" >
+        Email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="so != null" >
+        #{so,jdbcType=VARCHAR},
+      </if>
+      <if test="soItem != null" >
+        #{soItem,jdbcType=VARCHAR},
+      </if>
+      <if test="partner != null" >
+        #{partner,jdbcType=VARCHAR},
+      </if>
+      <if test="customer != null" >
+        #{customer,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bys.ots.model.SoEmailSapExample" resultType="java.lang.Integer" >
+    select count(*) from so_email_sap
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update so_email_sap
+    <set >
+      <if test="record.so != null" >
+        SO = #{record.so,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soItem != null" >
+        SO_Item = #{record.soItem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partner != null" >
+        Partner = #{record.partner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customer != null" >
+        Customer = #{record.customer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        Email = #{record.email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update so_email_sap
+    set SO = #{record.so,jdbcType=VARCHAR},
+      SO_Item = #{record.soItem,jdbcType=VARCHAR},
+      Partner = #{record.partner,jdbcType=VARCHAR},
+      Customer = #{record.customer,jdbcType=VARCHAR},
+      Email = #{record.email,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bys.ots.model.SoEmailSap" >
+    update so_email_sap
+    <set >
+      <if test="partner != null" >
+        Partner = #{partner,jdbcType=VARCHAR},
+      </if>
+      <if test="customer != null" >
+        Customer = #{customer,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        Email = #{email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SO = #{so,jdbcType=VARCHAR}
+      and SO_Item = #{soItem,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bys.ots.model.SoEmailSap" >
+    update so_email_sap
+    set Partner = #{partner,jdbcType=VARCHAR},
+      Customer = #{customer,jdbcType=VARCHAR},
+      Email = #{email,jdbcType=VARCHAR}
+    where SO = #{so,jdbcType=VARCHAR}
+      and SO_Item = #{soItem,jdbcType=VARCHAR}
+  </update>
+</mapper>

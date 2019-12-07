@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bys.ots.dao.ComplaintMapper">
+  <resultMap id="BaseResultMap" type="com.bys.ots.model.Complaint">
+  <!--
+      WARNING - @白瑞华
+    -->
+    <result column="description_id" jdbcType="VARCHAR" property="descriptionId" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="catalog_id" jdbcType="INTEGER" property="catalogId" />
+    <result column="author_id" jdbcType="VARCHAR" property="authorId" />
+    <result column="describe_time" jdbcType="VARCHAR" property="describeTime" />
+     <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+  </resultMap>
+ 
+  <insert id="insert" parameterType="com.bys.ots.model.Complaint">
+    insert into complaint
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="descriptionId != null">
+        description_id,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+       <if test="catalogId != null">
+        catalog_id,
+      </if>
+       <if test="authorId != null">
+        author_id,
+      </if>
+       <if test="describeTime != null">
+        describe_time,
+      </if>
+       <if test="isDeleted != null">
+        is_deleted,
+      </if>
+        
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="descriptionId != null">
+        #{descriptionId},
+      </if>
+      <if test="description != null">
+        #{description},
+      </if>
+      <if test="catalogId != null">
+        #{catalogId},
+      </if>
+       <if test="authorId != null">
+        #{authorId},
+      </if>
+       <if test="describeTime != null">
+        #{describeTime},
+      </if>
+       <if test="isDeleted != null">
+        #{isDeleted},
+      </if>
+        
+    </trim>
+  </insert>
+
+      <select id="findAll" resultType="com.bys.ots.model.Complaint" >
+    select * from complaint  
+	   <where>
+	    <if test="1 ==1">
+	          and is_deleted = 0
+	    </if> 
+	  </where>  
+   </select>   
+       <select id="findByUserId" resultType="com.bys.ots.model.Complaint" parameterType="String">
+    select * from complaint  
+	   <where>
+	     <if test="userId != null">
+	        and   user_id = #{userId} 
+	    </if> 
+	      <if test="1 == 1">
+	        and is_deleted = 0
+	    </if> 
+	 
+	  </where>  
+   </select> 
+      <select id="findById" resultType="com.bys.ots.model.Complaint" parameterType="String">
+    select * from complaint  
+	   <where>
+	     <if test="descriptionId != null">
+	        and   description_id = #{descriptionId} 
+	    </if> 
+	      <if test="1 == 1">
+	        and is_deleted = 0
+	    </if> 
+	 
+	  </where>  
+   </select> 
+</mapper>

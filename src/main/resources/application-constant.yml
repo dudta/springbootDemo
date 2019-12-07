@@ -1,0 +1,7 @@
+model:
+   buleBoxPartnered: tf@2019
+   verificationEmailHeader: <html> <body> <BR> <div align='left'><p style=\"margin:0;padding:0;font-size:14px;line-height:30px;color:#333;font-family:arial,sans-serif;font-weight:bold\">亲爱的用户：</p><div
+      style=\"line-height:20px;height:20px\">&nbsp;</div><p style=\"margin:0;padding:0;line-height:30px;font-size:14px;color:#333;font-family:'宋体',arial,sans-serif\">您好！您正在进行邮箱验证，本次请求的验证码为：</p><p><span
+      style=\"font-size:18px;color:#f90\">
+   verificationEmailBody: </span><span style=\"margin:0;padding:0;margin-left:10px;line-height:30px;font-size:14px;color:#979797;font-family:'宋体',arial,sans-serif\">(
+      为了保障您帐号的安全性，请在1小时内完成验证。)</span></p></p></div></body></html>

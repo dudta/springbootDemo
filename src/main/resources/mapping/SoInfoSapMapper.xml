@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bys.ots.dao.SoInfoSapMapper" >
+  <resultMap id="BaseResultMap" type="com.bys.ots.model.SoInfoSap" >
+    <id column="SO" property="so" jdbcType="VARCHAR" />
+    <id column="SO_Item" property="soItem" jdbcType="VARCHAR" />
+    <result column="Po_Number" property="poNumber" jdbcType="VARCHAR" />
+    <result column="Sold_To" property="soldTo" jdbcType="VARCHAR" />
+    <result column="Sale_Org" property="saleOrg" jdbcType="VARCHAR" />
+    <result column="Sale_Office" property="saleOffice" jdbcType="VARCHAR" />
+    <result column="Dis_C" property="disC" jdbcType="VARCHAR" />
+    <result column="SKU" property="sku" jdbcType="INTEGER" />
+    <result column="SO_status" property="soStatus" jdbcType="INTEGER" />
+    <result column="Description" property="description" jdbcType="VARCHAR" />
+    <result column="Qty" property="qty" jdbcType="INTEGER" />
+    <result column="Unit" property="unit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SO, SO_Item, Po_Number, Sold_To, Sale_Org, Sale_Office, Dis_C, SKU, SO_status, Description, 
+    Qty, Unit, 'sap' type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bys.ots.model.SoInfoSapExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from so_info_sap
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.bys.ots.model.SoInfoSapKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from so_info_sap
+    where SO = #{so,jdbcType=VARCHAR}
+      and SO_Item = #{soItem,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.bys.ots.model.SoInfoSapKey" >
+    delete from so_info_sap
+    where SO = #{so,jdbcType=VARCHAR}
+      and SO_Item = #{soItem,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bys.ots.model.SoInfoSapExample" >
+    delete from so_info_sap
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bys.ots.model.SoInfoSap" >
+    insert into so_info_sap (SO, SO_Item, Po_Number, 
+      Sold_To, Sale_Org, Sale_Office, 
+      Dis_C, SKU, SO_status, 
+      Description, Qty, Unit
+      )
+    values (#{so,jdbcType=VARCHAR}, #{soItem,jdbcType=VARCHAR}, #{poNumber,jdbcType=VARCHAR}, 
+      #{soldTo,jdbcType=VARCHAR}, #{saleOrg,jdbcType=VARCHAR}, #{saleOffice,jdbcType=VARCHAR}, 
+      #{disC,jdbcType=VARCHAR}, #{sku,jdbcType=INTEGER}, #{soStatus,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{qty,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+   <insert id="insertBatch" parameterType="List">
+    <!--
+      WARNING - @mbg.generated
+      This element is automatically generated by MyBatis Generator, do not modify.
+    -->
+    insert into  so_info_sap (SO, SO_Item, Po_Number, 
+      Sold_To, Sale_Org, Sale_Office, 
+      Dis_C, SKU, SO_status, 
+      Description, Qty, Unit
+      )
+    values 
+    <foreach collection="data" item="SoInfoSap" separator=",">
+    ( 
+      #{SoInfoSap.so,jdbcType=VARCHAR}, #{SoInfoSap.soItem,jdbcType=VARCHAR}, #{SoInfoSap.poNumber,jdbcType=VARCHAR}, 
+      #{SoInfoSap.soldTo,jdbcType=VARCHAR}, #{SoInfoSap.saleOrg,jdbcType=VARCHAR}, #{SoInfoSap.saleOffice,jdbcType=VARCHAR}, 
+      #{SoInfoSap.disC,jdbcType=VARCHAR}, #{SoInfoSap.sku,jdbcType=INTEGER}, #{SoInfoSap.soStatus,jdbcType=INTEGER}, 
+      #{SoInfoSap.description,jdbcType=VARCHAR}, #{SoInfoSap.qty,jdbcType=INTEGER}, #{SoInfoSap.unit,jdbcType=VARCHAR}
+    )
+    </foreach>
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.bys.ots.model.SoInfoSap" >
+    insert into so_info_sap
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="so != null" >
+        SO,
+      </if>
+      <if test="soItem != null" >
+        SO_Item,
+      </if>
+      <if test="poNumber != null" >
+        Po_Number,
+      </if>
+      <if test="soldTo != null" >
+        Sold_To,
+      </if>
+      <if test="saleOrg != null" >
+        Sale_Org,
+      </if>
+      <if test="saleOffice != null" >
+        Sale_Office,
+      </if>
+      <if test="disC != null" >
+        Dis_C,
+      </if>
+      <if test="sku != null" >
+        SKU,
+      </if>
+      <if test="soStatus != null" >
+        SO_status,
+      </if>
+      <if test="description != null" >
+        Description,
+      </if>
+      <if test="qty != null" >
+        Qty,
+      </if>
+      <if test="unit != null" >
+        Unit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="so != null" >
+        #{so,jdbcType=VARCHAR},
+      </if>
+      <if test="soItem != null" >
+        #{soItem,jdbcType=VARCHAR},
+      </if>
+      <if test="poNumber != null" >
+        #{poNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="soldTo != null" >
+        #{soldTo,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrg != null" >
+        #{saleOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOffice != null" >
+        #{saleOffice,jdbcType=VARCHAR},
+      </if>
+      <if test="disC != null" >
+        #{disC,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=INTEGER},
+      </if>
+      <if test="soStatus != null" >
+        #{soStatus,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bys.ots.model.SoInfoSapExample" resultType="java.lang.Integer" >
+    select count(*) from so_info_sap
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update so_info_sap
+    <set >
+      <if test="record.so != null" >
+        SO = #{record.so,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soItem != null" >
+        SO_Item = #{record.soItem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poNumber != null" >
+        Po_Number = #{record.poNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soldTo != null" >
+        Sold_To = #{record.soldTo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOrg != null" >
+        Sale_Org = #{record.saleOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOffice != null" >
+        Sale_Office = #{record.saleOffice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disC != null" >
+        Dis_C = #{record.disC,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sku != null" >
+        SKU = #{record.sku,jdbcType=INTEGER},
+      </if>
+      <if test="record.soStatus != null" >
+        SO_status = #{record.soStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null" >
+        Description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qty != null" >
+        Qty = #{record.qty,jdbcType=INTEGER},
+      </if>
+      <if test="record.unit != null" >
+        Unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update so_info_sap
+    set SO = #{record.so,jdbcType=VARCHAR},
+      SO_Item = #{record.soItem,jdbcType=VARCHAR},
+      Po_Number = #{record.poNumber,jdbcType=VARCHAR},
+      Sold_To = #{record.soldTo,jdbcType=VARCHAR},
+      Sale_Org = #{record.saleOrg,jdbcType=VARCHAR},
+      Sale_Office = #{record.saleOffice,jdbcType=VARCHAR},
+      Dis_C = #{record.disC,jdbcType=VARCHAR},
+      SKU = #{record.sku,jdbcType=INTEGER},
+      SO_status = #{record.soStatus,jdbcType=INTEGER},
+      Description = #{record.description,jdbcType=VARCHAR},
+      Qty = #{record.qty,jdbcType=INTEGER},
+      Unit = #{record.unit,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bys.ots.model.SoInfoSap" >
+    update so_info_sap
+    <set >
+      <if test="poNumber != null" >
+        Po_Number = #{poNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="soldTo != null" >
+        Sold_To = #{soldTo,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrg != null" >
+        Sale_Org = #{saleOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOffice != null" >
+        Sale_Office = #{saleOffice,jdbcType=VARCHAR},
+      </if>
+      <if test="disC != null" >
+        Dis_C = #{disC,jdbcType=VARCHAR},
+      </if>
+      <if test="sku != null" >
+        SKU = #{sku,jdbcType=INTEGER},
+      </if>
+      <if test="soStatus != null" >
+        SO_status = #{soStatus,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        Description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        Qty = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null" >
+        Unit = #{unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SO = #{so,jdbcType=VARCHAR}
+      and SO_Item = #{soItem,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bys.ots.model.SoInfoSap" >
+    update so_info_sap
+    set Po_Number = #{poNumber,jdbcType=VARCHAR},
+      Sold_To = #{soldTo,jdbcType=VARCHAR},
+      Sale_Org = #{saleOrg,jdbcType=VARCHAR},
+      Sale_Office = #{saleOffice,jdbcType=VARCHAR},
+      Dis_C = #{disC,jdbcType=VARCHAR},
+      SKU = #{sku,jdbcType=INTEGER},
+      SO_status = #{soStatus,jdbcType=INTEGER},
+      Description = #{description,jdbcType=VARCHAR},
+      Qty = #{qty,jdbcType=INTEGER},
+      Unit = #{unit,jdbcType=VARCHAR}
+    where SO = #{so,jdbcType=VARCHAR}
+      and SO_Item = #{soItem,jdbcType=VARCHAR}
+  </update>
+</mapper>

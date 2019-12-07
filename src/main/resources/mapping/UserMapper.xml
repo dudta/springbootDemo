@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bys.ots.dao.UserMapper">
+  <!--
+      WARNING - @白瑞华
+    -->
+  <resultMap id="BaseResultMap" type="com.bys.ots.model.User">
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+  	<result column="open_id" jdbcType="VARCHAR" property="openId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.bys.ots.model.User">
+    insert into user_info (user_id, user_name, email, address, order_id, is_deleted, open_id)
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},#{orderId,jdbcType=VARCHAR},#{isDeleted,jdbcType=INTEGER},#{openId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertUser" parameterType="com.bys.ots.model.User">
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+       <if test="email != null">
+        email,
+      </if>
+       <if test="address != null">
+        address,
+      </if>
+       <if test="orderId != null">
+        order_id,
+      </if>
+       <if test="isDeleted != null">
+        is_deleted,
+      </if>
+       <if test="openId != null">
+        open_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId},
+      </if>
+      <if test="userName != null">
+        #{userName},
+      </if>
+      <if test="email != null">
+        #{email},
+      </if>
+       <if test="address != null">
+        #{address},
+      </if>
+       <if test="orderId != null">
+        #{orderId},
+      </if>
+       <if test="isDeleted != null">
+        #{isDeleted},
+      </if>
+       <if test="openId != null">
+        #{openId},
+      </if>
+    </trim>
+  </insert>
+
+ 
+   <select id="findByUser" resultType="com.bys.ots.model.User" parameterType="com.bys.ots.model.User">
+    select * from user_info  
+	   <where>
+	   <if test="userId != null">
+	         user_id = #{userId}
+	    </if> 
+	    <if test="userName != null">
+	       and  user_name = #{userName}
+	    </if> 
+	    <if test="email != null">
+	        and email = #{email}
+	    </if> 
+	    <if test="address != null">
+	        and address = #{address}
+	    </if> 
+	    <if test="orderId != null">
+	       and  order_id = #{orderId}
+	    </if> 
+	    <if test="isDeleted != null">
+	        and is_deleted = #{password}
+	    </if>
+	    <if test="openId != null">
+	        and open_id = #{openId}
+	    </if>
+	  </where>
+  </select>
+  
+  <select id="findAllUser" resultType="com.bys.ots.model.User">
+    select * from user_info
+  </select>
+ 
+   
+   <select id="findByEmail" resultType="com.bys.ots.model.User" parameterType="String">
+    select * from user_info  
+	   <where> 
+	    <if test="email != null">
+	       and  email = #{email}
+	    </if> 
+	    <if test="1 ==1">
+	        and is_deleted = 0
+	    </if>
+	  </where>
+  </select>  
+  
+    <select id="findByEmailAndPassword" resultType="com.bys.ots.model.User" parameterType="String">
+    select * from user_info  
+	   <where> 
+	    <if test="email != null">
+	       and  email = #{email}
+	    </if> 
+	     <if test="openId != null">
+	        and open_id = #{openId}
+	    </if> 
+	    <if test="1 == 1">
+	        and is_deleted = 0
+	    </if>
+	  </where>
+  </select>  
+  
+     <select id="findByEmail2" resultType="com.bys.ots.model.User" parameterType="String" >
+    select * from user_info  
+	   <where> 
+	    <if test="email != null">
+	         email = #{email}
+	    </if> 
+	  </where>
+  </select>
+  
+   <select id="findAllUserCount" resultType="java.lang.Integer">
+    select count(*) from user_info
+  </select>  
+  
+     <select id="findByUserId" resultType="com.bys.ots.model.User" parameterType="String" >
+    select * from user_info  
+	   <where> 
+	    <if test="userId != null">
+	         user_id = #{userId}
+	    </if> 
+	      <if test="1 ==1">
+	        and is_deleted = 0
+	    </if>
+	  </where>
+  </select>
+
+    <select id="findByOpenId" resultType="com.bys.ots.model.User" parameterType="String">
+        select * from user_info
+        <where>
+            <if test="openId != null">
+                and  open_id = #{openId}
+            </if>
+            <if test="1 ==1">
+                and is_deleted = 0
+            </if>
+        </where>
+    </select>
+</mapper>
