@@ -44,7 +44,7 @@ public class SpringbootDemoApplication extends SpringBootServletInitializer
         Arrays.sort(beans);
         for (String bean : beans)
         {
-             //System.out.println(bean + " of Type :: " + appContext.getBean(bean).getClass());
+             System.out.println(bean + " of Type :: " + appContext.getBean(bean).getClass());
         }
     }
 }
