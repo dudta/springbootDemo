@@ -1,9 +1,8 @@
 /**
- * 
+ *
  */
 package com.bys.ots.service;
 
- 
 import com.bys.ots.pojo.Result;
 
 /**
@@ -12,5 +11,5 @@ import com.bys.ots.pojo.Result;
  */
 public interface ComplaintService
 {
- Result getAllComplaint();
+    Result getAllComplaint();
 }

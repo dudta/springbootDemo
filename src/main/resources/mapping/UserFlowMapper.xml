@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bys.ots.dao.UserFlowMapper">
+  <!--
+      WARNING - @白瑞华
+    -->
+  <resultMap id="BaseResultMap" type="com.bys.ots.model.UserFlow">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="catagory" jdbcType="VARCHAR" property="catagory" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="operate" jdbcType="VARCHAR" property="operate" />
+    <result column="args" jdbcType="VARCHAR" property="args" />
+  	<result column="time" jdbcType="DATE" property="time" />
+  </resultMap>
+  <insert id="insert" parameterType="com.bys.ots.model.UserFlow">
+    insert into user_flow (id, catagory, description, user_id, operate, args, time)
+    values (#{id,jdbcType=VARCHAR}, #{catagory,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},#{operate,jdbcType=VARCHAR},#{args,jdbcType=VARCHAR},now())
+  </insert>
+     <select id="findByUserId" resultType="com.bys.ots.model.User" parameterType="String" >
+    select * from user_flow
+	   <where> 
+	    <if test="userId != null">
+	         user_id = #{userId}
+	    </if> 
+	  </where>
+  </select>
+</mapper>

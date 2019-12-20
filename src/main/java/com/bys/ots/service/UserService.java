@@ -7,6 +7,9 @@ import java.util.List;
 
 import com.bys.ots.model.User;
 import com.bys.ots.pojo.Result;
+
+import javax.servlet.http.HttpSession;
+
 /**
  * 
  * @author bairuihua
@@ -14,9 +17,11 @@ import com.bys.ots.pojo.Result;
  */
 public interface UserService
 {
-    Result login(String rawData);
+    Result login(String rawData, HttpSession session);
 
-    Result register(String rawData);
+    Result register(String rawData, HttpSession session);
+
+    Result deleteEmail(String rawData);
 
     // List findAllUser();
     //

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bys.ots.dao.SoInfoMapper">
+    <resultMap id="BaseResultMap" type="com.bys.ots.model.SoInfo">
+        <!--
+            WARNING - @白瑞华
+          -->
+        <result column="so" jdbcType="VARCHAR" property="so"/>
+        <result column="po_number" jdbcType="VARCHAR" property="poNumber"/>
+        <result column="soldTo_code" jdbcType="VARCHAR" property="soldToCode"/>
+        <result column="soldTo_name" jdbcType="VARCHAR" property="soldToName"/>
+        <result column="shipTo_code" jdbcType="VARCHAR" property="shipToCode"/>
+        <result column="shipTo_name" jdbcType="VARCHAR" property="shipToName"/>
+        <result column="so_createDate" jdbcType="DATE" property="soCreateDate"/>
+        <result column="delivery_status" jdbcType="INTEGER" property="deliveryStatus"/>
+        <result column="sale_personName" jdbcType="VARCHAR" property="salePersonName"/>
+        <result column="sale_personPhone" jdbcType="VARCHAR" property="salePersonPhone"/>
+        <result column="sale_personEmail" jdbcType="VARCHAR" property="salePersonEmail"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+
+    </resultMap>
+
+    <insert id="insert" parameterType="com.bys.ots.model.SoInfo">
+        insert into order_table
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="e1OrderId != null">
+                e1_order_id,
+            </if>
+            <if test="sku != null">
+                sku,
+            </if>
+            <if test="promptGoodCenterName != null">
+                prompt_good_center_name,
+            </if>
+            <if test="technologyGroup != null">
+                technology_group,
+            </if>
+            <if test="sale != null">
+                sale,
+            </if>
+            <if test="goodReceiver != null">
+                good_receiver,
+            </if>
+            <if test="userCountId != null">
+                user_count_id,
+            </if>
+            <if test="orderState != null">
+                order_state,
+            </if>
+            <if test="orderType != null">
+                order_type,
+            </if>
+            <if test="purchaseTime != null">
+                purchase_time,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="distributionCenterId != null">
+                distributionCenterId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                #{orderId},
+            </if>
+            <if test="e1OrderId != null">
+                #{e1OrderId},
+            </if>
+            <if test="sku != null">
+                #{sku},
+            </if>
+            <if test="promptGoodCenterName != null">
+                #{promptGoodCenterName},
+            </if>
+            <if test="technologyGroup != null">
+                #{technologyGroup},
+            </if>
+            <if test="sale != null">
+                #{sale},
+            </if>
+            <if test="goodReceiver != null">
+                #{goodReceiver},
+            </if>
+            <if test="userCountId != null">
+                #{userCountId},
+            </if>
+            <if test="orderState != null">
+                #{orderState},
+            </if>
+            <if test="orderType != null">
+                #{orderType},
+            </if>
+            <if test="purchaseTime != null">
+                #{purchaseTime},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+            <if test="distributionCenterId != null">
+                #{distributionCenterId},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findByOrderId" resultType="com.bys.ots.model.SoInfo" parameterType="String">
+        select * from order_table
+        <where>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="1 ==1">
+                and is_deleted = 0
+            </if>
+        </where>
+    </select>
+    <select id="findByEmail" resultType="com.bys.ots.model.SoInfo" parameterType="String">
+        select * from order_table t1,user_info t2
+        <where>
+            <if test="1 == 1">
+                and t1.user_id = t2.user_id
+            </if>
+            <if test="1 == 1">
+                and t1.is_deleted = 0
+            </if>
+            <if test="1 == 1">
+                and t2.is_deleted = 0
+            </if>
+            <if test="email != null">
+                and t2.email = #{email}
+            </if>
+        </where>
+    </select>
+    <select id="selectByEmailAndStatus" resultType="com.bys.ots.model.SoInfo">
+        <!--
+          WARNING - @bairuihua
+          This element is automatically generated by MyBatis Generator, do not modify.
+        -->
+        <!--    select * from ( select t2.so, t2.so_item  'e1' type-->
+        <!--    from so_email_e1 t1,so_info_e1 t2-->
+        <!--     where 1 = 1-->
+        <!--	     <if test="email != null">-->
+        <!--	        and  t1.email = #{email}-->
+        <!--	    </if> -->
+        <!--	      <if test="1 == 1">-->
+        <!--	        and  t1.SO = t2.SO-->
+        <!--	    </if> -->
+        <!--	     <if test="1 == 1">-->
+        <!--	        and  t1.SO_Item = t2.SO_Item-->
+        <!--	    </if> -->
+        <!--	    UNION-->
+        select distinct t2.so,t2.po_number ,t2.soldTo_code,t2.soldTo_name,t2.
+        shipTo_code,t2.shipTo_name , DATE_FORMAT(t2.so_createDate, '%Y-%m-%d') so_createDate,
+        t2.delivery_status , t2. sale_personName , t2. sale_personPhone ,
+        t2.sale_personEmail , 'sap' type from so_email_sap t1 , so_info_sap t2
+        where 1 = 1
+        <if test="email != null">
+            and t1.email = #{email}
+        </if>
+        <if test="deliveryStatus != null">
+            and t2.delivery_status = #{deliveryStatus}
+        </if>
+
+        <if test="1 == 1">
+            and t1.SO = t2.SO
+        </if>
+        <if test="1 == 1">
+            and t1.SO_Item = t2.SO_Item
+            -- )a order by a.so desc
+        </if>
+        order by t2.so_createDate
+    </select>
+
+    <select id="selectByEmail" resultType="com.bys.ots.model.SoInfo">
+        <!--
+          WARNING - @bairuihua
+          This element is automatically generated by MyBatis Generator, do not modify.
+        -->
+        select distinct t2. so,t2.po_number ,t2.soldTo_code,t2.soldTo_name,t2.
+        shipTo_code,t2.shipTo_name ,
+        t2.so_createDate , t2.delivery_status , t2. sale_personName , t2. sale_personPhone ,
+        t2.sale_personEmail , t2. type from so_email_sap t1 INNER JOIN so_info_sap t2 ON t1.SO =
+        t2.SO
+        where 1 = 1
+        <if test="email != null">
+            and so_email_e1.Email = #{email}
+        </if>
+    </select>
+
+</mapper>

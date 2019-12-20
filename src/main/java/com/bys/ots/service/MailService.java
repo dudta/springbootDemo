@@ -2,6 +2,9 @@
  * 邮件service接口
  */
 package com.bys.ots.service;
+
+import com.bys.ots.pojo.Result;
+
 /**
  * 
  * @author bairuihua
@@ -9,5 +12,5 @@ package com.bys.ots.service;
  */
 public interface MailService {
 
-	String sendVerifyCode(String email);
+	Result sendVerifyCode(String email);
 }

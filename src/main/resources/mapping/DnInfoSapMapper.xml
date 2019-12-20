@@ -1,114 +1,121 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bys.ots.dao.DnInfoSapMapper" >
-  <resultMap id="BaseResultMap" type="com.bys.ots.model.DnInfoSap" >
-    <id column="DN" property="dn" jdbcType="VARCHAR" />
-    <id column="DN_Item" property="dnItem" jdbcType="VARCHAR" />
-    <result column="SO" property="so" jdbcType="VARCHAR" />
-    <result column="SO_Item" property="soItem" jdbcType="VARCHAR" />
-    <result column="Plant" property="plant" jdbcType="VARCHAR" />
-    <result column="Stor_Loc" property="storLoc" jdbcType="VARCHAR" />
-    <result column="Shipping_Point" property="shippingPoint" jdbcType="VARCHAR" />
-    <result column="DN_status" property="dnStatus" jdbcType="INTEGER" />
-    <result column="Delivery_Date" property="deliveryDate" jdbcType="TIMESTAMP" />
-    <result column="Qty" property="qty" jdbcType="INTEGER" />
-    <result column="Unit" property="unit" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bys.ots.dao.DnInfoSapMapper">
+    <resultMap id="BaseResultMap" type="com.bys.ots.model.DnInfoSap">
+        <id column="DN" property="dn" jdbcType="VARCHAR"/>
+        <id column="DN_Item" property="dnItem" jdbcType="VARCHAR"/>
+        <result column="SO" property="so" jdbcType="VARCHAR"/>
+        <result column="SO_Item" property="soItem" jdbcType="VARCHAR"/>
+        <result column="Plant" property="plant" jdbcType="VARCHAR"/>
+        <result column="Stor_Loc" property="storLoc" jdbcType="VARCHAR"/>
+        <result column="Shipping_Point" property="shippingPoint" jdbcType="VARCHAR"/>
+        <result column="DN_status" property="dnStatus" jdbcType="INTEGER"/>
+        <result column="Delivery_Date" property="deliveryDate" jdbcType="TIMESTAMP"/>
+        <result column="Qty" property="qty" jdbcType="INTEGER"/>
+        <result column="Unit" property="unit" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
     DN, DN_Item, SO, SO_Item, Plant, Stor_Loc, Shipping_Point, DN_status, Delivery_Date, 
     Qty, Unit
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bys.ots.model.DnInfoSapExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from dn_info_sap
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.bys.ots.model.DnInfoSapKey" >
-    select 
-    <include refid="Base_Column_List" />
-    from dn_info_sap
-    where DN = #{dn,jdbcType=VARCHAR}
-      and DN_Item = #{dnItem,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.bys.ots.model.DnInfoSapKey" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.bys.ots.model.DnInfoSapExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from dn_info_sap
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="com.bys.ots.model.DnInfoSapKey">
+        select
+        <include refid="Base_Column_List"/>
+        from dn_info_sap
+        where DN = #{dn,jdbcType=VARCHAR}
+        and DN_Item = #{dnItem,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.bys.ots.model.DnInfoSapKey">
     delete from dn_info_sap
     where DN = #{dn,jdbcType=VARCHAR}
       and DN_Item = #{dnItem,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.bys.ots.model.DnInfoSapExample" >
-    delete from dn_info_sap
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.bys.ots.model.DnInfoSap" >
+    <delete id="deleteByExample" parameterType="com.bys.ots.model.DnInfoSapExample">
+        delete from dn_info_sap
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.bys.ots.model.DnInfoSap">
     insert into dn_info_sap (DN, DN_Item, SO, 
       SO_Item, Plant, Stor_Loc, 
       Shipping_Point, DN_status, Delivery_Date, 
@@ -118,199 +125,198 @@
       #{shippingPoint,jdbcType=VARCHAR}, #{dnStatus,jdbcType=INTEGER}, #{deliveryDate,jdbcType=TIMESTAMP}, 
       #{qty,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR})
   </insert>
-   <insert id="InsertDnList" parameterType="List">
-   
-     insert into dn_info_sap (DN, DN_Item, SO, 
-      SO_Item, Plant, Stor_Loc, 
-      Shipping_Point, DN_status, Delivery_Date, 
-      Qty, Unit)
-    values 
-    <foreach collection="dlist" item="DnInfoSap" separator=",">
-    ( 
-      #{DnInfoSap.dn}, #{DnInfoSap.dnItem}, #{DnInfoSap.so}, 
-      #{DnInfoSap.soItem}, #{DnInfoSap.plant}, #{DnInfoSap.storLoc}, 
-      #{DnInfoSap.shippingPoint}, #{DnInfoSap.dnStatus}, #{DnInfoSap.deliveryDate}, 
-       #{DnInfoSap.qty}, #{DnInfoSap.unit}
-    )
-    </foreach>
-  </insert>
-  
-  
-  
-  
-  
-  <insert id="insertSelective" parameterType="com.bys.ots.model.DnInfoSap" >
-    insert into dn_info_sap
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="dn != null" >
-        DN,
-      </if>
-      <if test="dnItem != null" >
-        DN_Item,
-      </if>
-      <if test="so != null" >
-        SO,
-      </if>
-      <if test="soItem != null" >
-        SO_Item,
-      </if>
-      <if test="plant != null" >
-        Plant,
-      </if>
-      <if test="storLoc != null" >
-        Stor_Loc,
-      </if>
-      <if test="shippingPoint != null" >
-        Shipping_Point,
-      </if>
-      <if test="dnStatus != null" >
-        DN_status,
-      </if>
-      <if test="deliveryDate != null" >
-        Delivery_Date,
-      </if>
-      <if test="qty != null" >
-        Qty,
-      </if>
-      <if test="unit != null" >
-        Unit,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="dn != null" >
-        #{dn,jdbcType=VARCHAR},
-      </if>
-      <if test="dnItem != null" >
-        #{dnItem,jdbcType=VARCHAR},
-      </if>
-      <if test="so != null" >
-        #{so,jdbcType=VARCHAR},
-      </if>
-      <if test="soItem != null" >
-        #{soItem,jdbcType=VARCHAR},
-      </if>
-      <if test="plant != null" >
-        #{plant,jdbcType=VARCHAR},
-      </if>
-      <if test="storLoc != null" >
-        #{storLoc,jdbcType=VARCHAR},
-      </if>
-      <if test="shippingPoint != null" >
-        #{shippingPoint,jdbcType=VARCHAR},
-      </if>
-      <if test="dnStatus != null" >
-        #{dnStatus,jdbcType=INTEGER},
-      </if>
-      <if test="deliveryDate != null" >
-        #{deliveryDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="qty != null" >
-        #{qty,jdbcType=INTEGER},
-      </if>
-      <if test="unit != null" >
-        #{unit,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.bys.ots.model.DnInfoSapExample" resultType="java.lang.Integer" >
-    select count(*) from dn_info_sap
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update dn_info_sap
-    <set >
-      <if test="record.dn != null" >
-        DN = #{record.dn,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dnItem != null" >
+    <insert id="InsertDnList" parameterType="List">
+
+        insert into dn_info_sap (DN, DN_Item, SO,
+        SO_Item, Plant, Stor_Loc,
+        Shipping_Point, DN_status, Delivery_Date,
+        Qty, Unit)
+        values
+        <foreach collection="dlist" item="DnInfoSap" separator=",">
+            (
+            #{DnInfoSap.dn}, #{DnInfoSap.dnItem}, #{DnInfoSap.so},
+            #{DnInfoSap.soItem}, #{DnInfoSap.plant}, #{DnInfoSap.storLoc},
+            #{DnInfoSap.shippingPoint}, #{DnInfoSap.dnStatus}, #{DnInfoSap.deliveryDate},
+            #{DnInfoSap.qty}, #{DnInfoSap.unit}
+            )
+        </foreach>
+
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.bys.ots.model.DnInfoSap">
+        insert into dn_info_sap
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dn != null">
+                DN,
+            </if>
+            <if test="dnItem != null">
+                DN_Item,
+            </if>
+            <if test="so != null">
+                SO,
+            </if>
+            <if test="soItem != null">
+                SO_Item,
+            </if>
+            <if test="plant != null">
+                Plant,
+            </if>
+            <if test="storLoc != null">
+                Stor_Loc,
+            </if>
+            <if test="shippingPoint != null">
+                Shipping_Point,
+            </if>
+            <if test="dnStatus != null">
+                DN_status,
+            </if>
+            <if test="deliveryDate != null">
+                Delivery_Date,
+            </if>
+            <if test="qty != null">
+                Qty,
+            </if>
+            <if test="unit != null">
+                Unit,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dn != null">
+                #{dn,jdbcType=VARCHAR},
+            </if>
+            <if test="dnItem != null">
+                #{dnItem,jdbcType=VARCHAR},
+            </if>
+            <if test="so != null">
+                #{so,jdbcType=VARCHAR},
+            </if>
+            <if test="soItem != null">
+                #{soItem,jdbcType=VARCHAR},
+            </if>
+            <if test="plant != null">
+                #{plant,jdbcType=VARCHAR},
+            </if>
+            <if test="storLoc != null">
+                #{storLoc,jdbcType=VARCHAR},
+            </if>
+            <if test="shippingPoint != null">
+                #{shippingPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="dnStatus != null">
+                #{dnStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deliveryDate != null">
+                #{deliveryDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="qty != null">
+                #{qty,jdbcType=INTEGER},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.bys.ots.model.DnInfoSapExample"
+            resultType="java.lang.Integer">
+        select count(*) from dn_info_sap
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update dn_info_sap
+        <set>
+            <if test="record.dn != null">
+                DN = #{record.dn,jdbcType=VARCHAR},
+            </if>
+            <if test="record.dnItem != null">
+                DN_Item = #{record.dnItem,jdbcType=VARCHAR},
+            </if>
+            <if test="record.so != null">
+                SO = #{record.so,jdbcType=VARCHAR},
+            </if>
+            <if test="record.soItem != null">
+                SO_Item = #{record.soItem,jdbcType=VARCHAR},
+            </if>
+            <if test="record.plant != null">
+                Plant = #{record.plant,jdbcType=VARCHAR},
+            </if>
+            <if test="record.storLoc != null">
+                Stor_Loc = #{record.storLoc,jdbcType=VARCHAR},
+            </if>
+            <if test="record.shippingPoint != null">
+                Shipping_Point = #{record.shippingPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="record.dnStatus != null">
+                DN_status = #{record.dnStatus,jdbcType=INTEGER},
+            </if>
+            <if test="record.deliveryDate != null">
+                Delivery_Date = #{record.deliveryDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.qty != null">
+                Qty = #{record.qty,jdbcType=INTEGER},
+            </if>
+            <if test="record.unit != null">
+                Unit = #{record.unit,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update dn_info_sap
+        set DN = #{record.dn,jdbcType=VARCHAR},
         DN_Item = #{record.dnItem,jdbcType=VARCHAR},
-      </if>
-      <if test="record.so != null" >
         SO = #{record.so,jdbcType=VARCHAR},
-      </if>
-      <if test="record.soItem != null" >
         SO_Item = #{record.soItem,jdbcType=VARCHAR},
-      </if>
-      <if test="record.plant != null" >
         Plant = #{record.plant,jdbcType=VARCHAR},
-      </if>
-      <if test="record.storLoc != null" >
         Stor_Loc = #{record.storLoc,jdbcType=VARCHAR},
-      </if>
-      <if test="record.shippingPoint != null" >
         Shipping_Point = #{record.shippingPoint,jdbcType=VARCHAR},
-      </if>
-      <if test="record.dnStatus != null" >
         DN_status = #{record.dnStatus,jdbcType=INTEGER},
-      </if>
-      <if test="record.deliveryDate != null" >
         Delivery_Date = #{record.deliveryDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.qty != null" >
         Qty = #{record.qty,jdbcType=INTEGER},
-      </if>
-      <if test="record.unit != null" >
-        Unit = #{record.unit,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update dn_info_sap
-    set DN = #{record.dn,jdbcType=VARCHAR},
-      DN_Item = #{record.dnItem,jdbcType=VARCHAR},
-      SO = #{record.so,jdbcType=VARCHAR},
-      SO_Item = #{record.soItem,jdbcType=VARCHAR},
-      Plant = #{record.plant,jdbcType=VARCHAR},
-      Stor_Loc = #{record.storLoc,jdbcType=VARCHAR},
-      Shipping_Point = #{record.shippingPoint,jdbcType=VARCHAR},
-      DN_status = #{record.dnStatus,jdbcType=INTEGER},
-      Delivery_Date = #{record.deliveryDate,jdbcType=TIMESTAMP},
-      Qty = #{record.qty,jdbcType=INTEGER},
-      Unit = #{record.unit,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bys.ots.model.DnInfoSap" >
-    update dn_info_sap
-    <set >
-      <if test="so != null" >
-        SO = #{so,jdbcType=VARCHAR},
-      </if>
-      <if test="soItem != null" >
-        SO_Item = #{soItem,jdbcType=VARCHAR},
-      </if>
-      <if test="plant != null" >
-        Plant = #{plant,jdbcType=VARCHAR},
-      </if>
-      <if test="storLoc != null" >
-        Stor_Loc = #{storLoc,jdbcType=VARCHAR},
-      </if>
-      <if test="shippingPoint != null" >
-        Shipping_Point = #{shippingPoint,jdbcType=VARCHAR},
-      </if>
-      <if test="dnStatus != null" >
-        DN_status = #{dnStatus,jdbcType=INTEGER},
-      </if>
-      <if test="deliveryDate != null" >
-        Delivery_Date = #{deliveryDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="qty != null" >
-        Qty = #{qty,jdbcType=INTEGER},
-      </if>
-      <if test="unit != null" >
-        Unit = #{unit,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where DN = #{dn,jdbcType=VARCHAR}
-      and DN_Item = #{dnItem,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.bys.ots.model.DnInfoSap" >
+        Unit = #{record.unit,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.bys.ots.model.DnInfoSap">
+        update dn_info_sap
+        <set>
+            <if test="so != null">
+                SO = #{so,jdbcType=VARCHAR},
+            </if>
+            <if test="soItem != null">
+                SO_Item = #{soItem,jdbcType=VARCHAR},
+            </if>
+            <if test="plant != null">
+                Plant = #{plant,jdbcType=VARCHAR},
+            </if>
+            <if test="storLoc != null">
+                Stor_Loc = #{storLoc,jdbcType=VARCHAR},
+            </if>
+            <if test="shippingPoint != null">
+                Shipping_Point = #{shippingPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="dnStatus != null">
+                DN_status = #{dnStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deliveryDate != null">
+                Delivery_Date = #{deliveryDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="qty != null">
+                Qty = #{qty,jdbcType=INTEGER},
+            </if>
+            <if test="unit != null">
+                Unit = #{unit,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where DN = #{dn,jdbcType=VARCHAR}
+        and DN_Item = #{dnItem,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.bys.ots.model.DnInfoSap">
     update dn_info_sap
     set SO = #{so,jdbcType=VARCHAR},
       SO_Item = #{soItem,jdbcType=VARCHAR},
@@ -324,16 +330,37 @@
     where DN = #{dn,jdbcType=VARCHAR}
       and DN_Item = #{dnItem,jdbcType=VARCHAR}
   </update>
-     <select id="selectBySoAndSoItem" resultType="com.bys.ots.model.DnInfoSap" parameterType="String">
-    select * from dn_info_sap  
-	   <where>
-	     <if test="so != null">
-	        and   SO = #{so} 
-	    </if> 
-	      <if test="soItem != null">
-	        and SO_Item = #{soItem}
-	    </if> 
-	 
-	  </where>  
-   </select> 
+    <select id="selectBySoAndSoItem" resultType="com.bys.ots.model.DnInfoSap"
+            parameterType="String">
+        select * from dn_info_sap
+        <where>
+            <if test="so != null">
+                and SO = #{so}
+            </if>
+            <if test="soItem != null">
+                and SO_Item = #{soItem}
+            </if>
+
+        </where>
+    </select>
+    <select id="selectBySOAndItem" parameterType="String" resultMap="BaseResultMap">
+        <!--
+          WARNING - @mbg.generated
+          This element is automatically generated by MyBatis Generator, do not modify.
+        -->
+        select *
+        from dn_info_sap
+        where SO = #{so,jdbcType=VARCHAR} and so_item = #{soItem,jdbcType=VARCHAR}
+    </select>
+    <select id="selectBySO" parameterType="String" resultType="com.bys.ots.model.SoInfoItem">
+        <!--
+          WARNING - @mbg.generated
+          This element is automatically generated by MyBatis Generator, do not modify.
+        -->
+        select t2.so_item,t2.sku,t2.description,t2.qty,t2.unit,t1.so,
+        t1.dn, DATE_FORMAT(t1.delivery_postdate, '%Y-%m-%d') delivery_postdate
+        ,t1.delivery_qty,t1.delivery_unit,'sap' type
+        from dn_info_sap t1,so_info_sap t2
+        where t1.so = t2.so and t1.so_item = t2.so_item and t2.SO = #{so,jdbcType=VARCHAR}
+    </select>
 </mapper>

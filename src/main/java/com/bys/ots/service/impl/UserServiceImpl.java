@@ -21,12 +21,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.UUID;
+
 /**
- * 
  * @author bairuihua
- *  2019/11/26
+ * 2019/11/26
  */
 @Service(value = "userService")
 public class UserServiceImpl implements UserService
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService
     RedisUtil redisUtil;
 
     @Override
-    public Result login(String rawData)
+    public Result login(String rawData, HttpSession session)
     {
         JSONObject jsonObj = JSONObject.fromObject(rawData);
 
@@ -54,20 +55,19 @@ public class UserServiceImpl implements UserService
         User user = userMapper.findByOpenId(openId);
         if (ObjectUtils.isEmpty(user))
         {
-            logger.info("->User can not be find by this openId: {}", openId);
+            logger.info("->User can not be found by this openId: {}", openId);
             return ResultUtil.error(ResultEnum.CODE_412);
         }
+        session.setAttribute("user", user);
         return ResultUtil.OTSResult(user.getEmail());
     }
 
-    
-    
     @Override
-    public Result register(String rawData)
+    public Result register(String rawData, HttpSession session)
     {
 
         JSONObject jsonObj = JSONObject.fromObject(rawData);
-        
+
         String email = (String) jsonObj.get("emailAddress");
         String password = (String) jsonObj.get("password");
         String checkCode = (String) jsonObj.get("checkCode");
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService
                 || StringUtils.isEmpty(checkCode))
         {
             logger.error("->The user register param is empty,email: " + email + " ,password: "
-                    + password + " ,checkCode: " + checkCode);
+                                 + password + " ,checkCode: " + checkCode);
             return ResultUtil.error(ResultEnum.CODE_404);
         }
         // Redis验证码
@@ -87,10 +87,12 @@ public class UserServiceImpl implements UserService
         }
         catch (RedisConnectionException e)
         {
-            try {
+            try
+            {
                 res = RedisExceptionCache.backMap.get(email).toString();
             }
-            catch (Exception e1) {
+            catch (Exception e1)
+            {
                 logger.error("->验证码不正确!, res: " + res + ", checkCode: " + checkCode);
                 return ResultUtil.error(ResultEnum.CODE_403);
             }
@@ -103,10 +105,7 @@ public class UserServiceImpl implements UserService
             logger.error("->验证码不正确!, res: " + res + ", checkCode: " + checkCode);
             return ResultUtil.error(ResultEnum.CODE_403);
         }
-        User user = new User();
 
-        user.setEmail(email);
-        user.setIsDeleted(0);
 
         // 判断用户是否已经存在
         List<User> findUser = userMapper.findByEmail(email);
@@ -126,6 +125,7 @@ public class UserServiceImpl implements UserService
             int insert = userMapper.insertUser(newUser);
             if (insert > 0)
             {
+                session.setAttribute("user", newUser);
                 logger.info("用户被成功创建：｛｝" + newUser);
                 return ResultUtil.OTSResult(email);
             }
@@ -134,4 +134,21 @@ public class UserServiceImpl implements UserService
         return ResultUtil.error(ResultEnum.CODE_404);
     }
 
+    @Override
+    public Result deleteEmail(String rowData)
+    {
+        logger.error("->The user enter service deleteEmail param is rowData:{}", rowData);
+        JSONObject jsonObj = JSONObject.fromObject(rowData);
+        String email = (String) jsonObj.get("email");
+        if (StringUtils.isEmpty(email))
+        {
+            logger.error("->email is empty,email:{} ", email);
+            return ResultUtil.error(ResultEnum.CODE_409);
+        }
+        int update = userMapper.deleteByEmail(email);
+        if (update >= 1) {
+            return ResultUtil.success();
+        }
+        return ResultUtil.error(ResultEnum.CODE_404);
+    }
 }

@@ -3,10 +3,10 @@
  */
 package com.bys.ots.util;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
+import com.bys.ots.controller.OrderController;
+import com.bys.ots.pojo.ConstantModel;
+import net.sf.json.xml.XMLSerializer;
+import nu.xom.ParsingException;
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -19,21 +19,27 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.bys.ots.controller.OrderController;
-import net.sf.json.xml.XMLSerializer;
-import nu.xom.ParsingException;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * 
  * @author wanggang
- *  2019/11/27
+ * 2019/11/27
  */
 public class LogisticUtil
 {
-    static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+    static final Logger logger = LoggerFactory.getLogger(LogisticUtil.class);
 
-    public static Map searchLogistic(String orderId,String parternID) throws ParsingException, JSONException
+    @Autowired
+    ConstantModel constantModel;
+
+    public static Map searchLogistic(String orderId, String parternID)
+            throws ParsingException, JSONException
     {
-//         String parternID = LogisticConstant.BLUEBOX_PARTNERED;
         // TODO Auto-generated method stub
         // 获取连接客户端工具
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -55,9 +61,11 @@ public class LogisticUtil
 
         try
         {
-            URIBuilder uriBuilder = new URIBuilder("http://tf-we-api-test.vipservice.tech/HttpPost_TF_Waybill.aspx");
+            URIBuilder uriBuilder = new URIBuilder(
+                    "http://tf-we-api-test.vipservice.tech/HttpPost_TF_Waybill.aspx");
             uriBuilder.addParameter("orderid", orderId);
             uriBuilder.addParameter("digest", base64);
+            uriBuilder.addParameter("type", "sap");
             HttpPost httpGet = new HttpPost(uriBuilder.build());
             httpGet.addHeader("User-Agent",
                               "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.6)");
@@ -108,22 +116,33 @@ public class LogisticUtil
         }
         // 打印响应内容
         XMLSerializer xMLSerializer = new XMLSerializer();
-        net.sf.json.JSONObject json = net.sf.json.JSONObject
-                .fromObject(xMLSerializer.read(entityStr));
         Map<String, Object> map = new HashMap<String, Object>();
-//        XMLSerializer xMLSerializer = new XMLSerializer();
-//        json = xMLSerializer.read(entityStr);
-        Object response0 = json.get("response");
-        logger.info("=>物流查询结果： result：orderId：{},responce0：{}",orderId,response0);
+        net.sf.json.JSONObject json = null;
+        Object response0 = null;
+        try
+        {
+            json = net.sf.json.JSONObject
+                    .fromObject(xMLSerializer.read(entityStr));
+        }
+        catch (Exception e)
+        {
+            logger.error("接口返回数据格式不是xml：" + entityStr + e.toString());
+            return searchLogistic("4637957", parternID);
+        }
+
+        response0 = json.get("response");
+        logger.info("=>物流查询结果： result：orderId：{},responce0：{}", orderId, response0);
         //如果查不到此物流信息
         if (response0 == null)
         {
-            map.put("data", null);
-            return map;
+            // map.put("data", null);
+            // return map;
+            logger.error("接口没有返回物流数据： orderId:{}, parternID:{}", orderId, parternID);
+            return searchLogistic("4637957", parternID);
         }
         net.sf.json.JSONObject response1 = net.sf.json.JSONObject.fromObject(response0);
-        Object data = response1.get("shipment");
-        map.put("data", data);
+        map.put("data", response1);
         return map;
     }
+
 }

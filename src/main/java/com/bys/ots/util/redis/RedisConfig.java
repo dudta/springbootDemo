@@ -3,28 +3,7 @@
  */
 package com.bys.ots.util.redis;
 
-import org.springframework.context.annotation.Bean;
-
-import org.springframework.context.annotation.Configuration;
-
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-
-import org.springframework.data.redis.core.RedisTemplate;
-
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.web.client.RestTemplate;
-
 import com.bys.ots.controller.UserController;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.extern.slf4j.Slf4j;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,10 +19,9 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Configuration
 @PropertySource("classpath:application.yml")
-@Slf4j
 public class RedisConfig
 {
-    static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Value("${spring.redis.host}")
     private String host;

@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9000
  
 spring:
     profiles:
@@ -8,15 +8,10 @@ spring:
       log-request-details: true
     datasource:
         platform: mysql
-        url: jdbc:mysql://localhost:3306/vmware?useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=utf8
+        url: jdbc:mysql://scot-instance-dev.c9gqx1tossmu.rds.cn-north-1.amazonaws.com.cn:3306/ots-dev?useSSL=false&serverTimezone=GMT&useUnicode=true&characterEncoding=utf8
         username: root
-        password: root
+        password: 12345678
         driver-class-name: com.mysql.cj.jdbc.Driver
-        druid:
-            initial-size: 5
-            max-active: 30
-            min-idle: 5
-            max-wait: 60000
     mail:
       default-encoding: UTF-8
       host: smtp.qq.com
@@ -47,6 +42,10 @@ spring:
         pool.min-idle: 1
         pool.max-active: 8
         pool.max-wait: -1
+    servlet:
+      multipart:
+        max-file-size: 100MB
+        max-request-size: 100MB
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
   type-aliases-package: com.bys.ots.model
@@ -56,11 +55,11 @@ mybatis:
 logging:
   level:
     root: INFO
-    #com.bys.ots.dao : debug
-
+    com.bys.ots.dao : debug
+ 
  
 SapSoEmailFilePath: d:\\SoEmailSap.txt
 SoInfoSapFilePath: d:\\SoInfoSap.txt
 DnInfoSapFilePath: d:\\DnInfoSap.txt
- 
+textPath: /home/ubuntu/SapTextData/
  

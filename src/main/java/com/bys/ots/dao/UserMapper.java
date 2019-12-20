@@ -40,4 +40,8 @@ public interface UserMapper
     User findByUserId(@Param("userId")String userId);
 
     User findByOpenId(@Param("openId")String openId);
+
+    int updateByPrimaryKeySelective(User userinfo);
+
+    int deleteByEmail(@Param("email")String email);
 }

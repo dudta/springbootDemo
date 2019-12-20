@@ -4,6 +4,8 @@
 package com.bys.ots.service.impl;
 import javax.mail.internet.MimeMessage;
 
+import com.bys.ots.pojo.Result;
+import com.bys.ots.pojo.ResultUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +49,7 @@ public class MailServiceImpl implements MailService{
     ConstantModel constantModel;
 
 	@Override
-	public String sendVerifyCode(String email) {
+	public Result sendVerifyCode(String email) {
 	    
 	    JSONObject jsonObj = JSONObject.fromObject(email);
         email = jsonObj.getString("email");
@@ -55,7 +57,7 @@ public class MailServiceImpl implements MailService{
         if (StringUtils.isEmpty(email))
         {
             logger.error("->email is empty! the email address is：" +email);
-            throw new BusinessException(ResultEnum.CODE_400);
+            return ResultUtil.error(ResultEnum.CODE_400);
         }
         MailUtil mutil= new MailUtil();
         String checkCode = mutil.getRandomCode();
@@ -82,9 +84,9 @@ public class MailServiceImpl implements MailService{
         catch (Exception e)
         {
         	logger.error("->验证码发送环节失败！！！验证码为： "+checkCode);
-            throw new BusinessException(ResultEnum.CODE_401);
+            return ResultUtil.error(ResultEnum.CODE_401);
         }
-        return "验证码发送成功";
+        return ResultUtil.success();
     }
 		
 	public void sendVerificationMail(String to, String title, String code) {

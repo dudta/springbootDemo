@@ -8,12 +8,12 @@ package com.bys.ots.pojo;
  */
 public class ResultUtil
 {
-    public static Result OTSResult(Object object)
+    public static <T> Result<T> OTSResult(T data)
     {
         Result result = new Result();
         result.setCode(ResultEnum.SUCCESS.getCode());
         result.setMsg(ResultEnum.SUCCESS.getMsg());
-        result.setData(object);
+        result.setData(data);
         return result;
     }
 

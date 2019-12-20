@@ -222,4 +222,5 @@
     where SO = #{so,jdbcType=VARCHAR}
       and SO_Item = #{soItem,jdbcType=VARCHAR}
   </update>
+
 </mapper>

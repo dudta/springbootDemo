@@ -1,28 +1,24 @@
 /**
-   * 订单信息controller层
+ * 订单信息controller层
  */
 package com.bys.ots.controller;
 
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import com.bys.ots.pojo.ConstantModel;
 import com.bys.ots.pojo.Result;
 import com.bys.ots.pojo.ResultEnum;
 import com.bys.ots.pojo.ResultUtil;
-import com.bys.ots.service.IOrderTableService;
+import com.bys.ots.service.ISoInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import javax.annotation.Resource;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author bairuihua
@@ -31,69 +27,98 @@ import javax.annotation.Resource;
 
 @Api(value = "Order Table Controller")
 @RestController
-@RequestMapping(value="v1")
+@RequestMapping(value = "v1")
 public class OrderController
 {
-    @Resource
-    private IOrderTableService orderTableService;
+    @Autowired
+    private ISoInfoService soInfoService;
 
     @Autowired
-    ConstantModel constantModel;
+    private ConstantModel constantModel;
 
-    static final Logger logger = LoggerFactory.getLogger(OrderController.class);
+    private final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
-    @PostMapping(value = "/getOderTableList")
-    @ApiOperation(value = "get Oder Table")
+    @PostMapping(value = "/getSoInfoList")
+    @ApiOperation(value = "get SoInfo")
     @ApiImplicitParams
-    ({
-         @ApiImplicitParam(name = "rawData",paramType = "body",  value = "请求体", required = true, defaultValue="{status:\"\";pageNum:\"\";pageSize:\"\"}") 
-    })
-    public Result getOderTable(@RequestBody(required = true) String rawData)
+            ({
+                    @ApiImplicitParam(name = "rawData", paramType = "body", value = "请求体", required = true, defaultValue = "{status:\"\"}")
+            })
+    public Result getSoInfoList(@RequestBody(required = true) String rawData, HttpSession session)
     {
-        logger.info("->User start to enter controller /getOderTableList, the email info is：rawData:{}",
-                    rawData);
+        logger.info(
+                "->User start to enter controller /getSoInfoList, the email info is：rawData:{}",
+                rawData);
         if (StringUtils.isEmpty(rawData))
         {
-            logger.error("->emailaddress 为空，  error, the email info is：rawData:{}", rawData);
+            logger.error("->rawData empty  error, the request info is：rawData:{}", rawData);
             return ResultUtil.error(ResultEnum.CODE_409);
         }
-        return orderTableService.getOderTableList(rawData);
+        return soInfoService.getSoInfoList(rawData);
 
     }
 
-    @GetMapping(value = "/getOderDetail")
-    @ApiOperation(value = "get Oder Table Detail")
+    @GetMapping(value = "/getSoInfoDetail")
+    @ApiOperation(value = "get SoInfo Detail")
     @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, dataType = "String")
-    //public Result getOderDetail(@RequestParam(required = false) String orderId)
-    public Result getOderDetail(@RequestParam(required = false,value="orderId") String orderId)
+    public Result getSoInfoDetail(@RequestParam(required = false, value = "orderId") String orderId,
+                                  @RequestParam(required = false, value = "type") String type, HttpSession session)
     {
-        logger.info("->User start to enter controller  getOderDetail, the request info is： orderId:{}",
-                    orderId);
+        logger.info(
+                "->User start to enter controller  getSoInfoDetail, the request info is： orderId:{},type:{}",
+                orderId, type);
         if (StringUtils.isEmpty(orderId))
         {
-            logger.error("->User start to enter controller getOderDetail error, the request is: orderId：{}",
+            logger.error("->orderId is empty, the request is: orderId：{}",
                          orderId);
             return ResultUtil.error(ResultEnum.CODE_406);
         }
-        return orderTableService.getOderDetail(orderId);
 
-    }  
+        if (StringUtils.isEmpty(type) || !StringUtils.equals(type.toUpperCase(), "SAP"))
+        {
+            logger.error("->type is empty, the request is: type：{}",
+                         type);
+            return ResultUtil.error(ResultEnum.CODE_416);
+        }
+        return soInfoService.getSoInfoDetail(orderId, type);
+
+    }
 
     @GetMapping(value = "/getLogisticInfo")
     @ApiOperation(value = "get Logistic Info")
     @ApiImplicitParams
-    ({ 
-        @ApiImplicitParam(name = "type", value = "订单类型", required = true, dataType = "String"),
-        @ApiImplicitParam(name = "so", value = "so编号", required = true, dataType = "String"), 
-        @ApiImplicitParam(name = "soItem", value = "soItem编号", required = true, dataType = "String")
-    })
-    public Result getLogisticInfo(@RequestParam String type, @RequestParam String so, @RequestParam String soItem)
+            ({
+                    @ApiImplicitParam(name = "type", value = "订单类型", required = true, dataType = "String"),
+                    @ApiImplicitParam(name = "so", value = "so编号", required = true, dataType = "String"),
+                    @ApiImplicitParam(name = "soItem", value = "soItem编号", required = true, dataType = "String")
+            })
+    public Result getLogisticInfo(@RequestParam String type, @RequestParam String so,
+                                  @RequestParam String soItem, HttpSession session)
     {
-        logger.info("->User start to enter controller  /getLogisticInfo, the request info is： type:{}, so:{}, soItem:{}",
-                    type, so, soItem);
-          
-        return orderTableService.getLogisticInfo(type, so, soItem);
-   
-   
+        logger.info(
+                "->User start to enter controller  /getLogisticInfo, the request info is： type:{}, so:{}, soItem:{}",
+                type, so, soItem);
+        if (StringUtils.isEmpty(type))
+        {
+            logger.error("->orderId is empty, the request is: orderId：{}",
+                         type);
+            return ResultUtil.error(ResultEnum.CODE_416);
+        }
+
+        if (StringUtils.isEmpty(so))
+        {
+            logger.error("->type is empty, the request is: type：{}",
+                         so);
+            return ResultUtil.error(ResultEnum.CODE_406);
+        }
+        if (StringUtils.isEmpty(soItem))
+        {
+            logger.error("->soItem is empty, the request is: soItem：{}",
+                         soItem);
+            return ResultUtil.error(ResultEnum.CODE_418);
+        }
+
+        return soInfoService.getLogisticInfo(type, so, soItem);
+
     }
 }
